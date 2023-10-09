@@ -10,6 +10,8 @@ return array(
     'PaymentPlugins\\PayPalSDK\\' => array($vendorDir . '/paymentplugins/paypal-php-sdk/src'),
     'PaymentPlugins\\PPCP\\WooFunnels\\' => array($baseDir . '/packages/woofunnels/src'),
     'PaymentPlugins\\PPCP\\WooCommerceShipStation\\' => array($baseDir . '/packages/woocommerce-shipstation/src'),
+    'PaymentPlugins\\PPCP\\WooCommerceProductAddons\\' => array($baseDir . '/packages/woocommerce-product-addons/src'),
+    'PaymentPlugins\\PPCP\\WooCommerceGermanized\\' => array($baseDir . '/packages/woocommerce-germanized/src'),
     'PaymentPlugins\\PPCP\\WooCommerceExtraProductOptions\\' => array($baseDir . '/packages/woocommerce-tm-extra-product-options/src'),
     'PaymentPlugins\\PPCP\\Stripe\\' => array($baseDir . '/packages/stripe/src'),
     'PaymentPlugins\\PPCP\\MondialRelay\\' => array($baseDir . '/packages/mondial-relay/src'),

@@ -62,6 +62,11 @@ class CartCheckout extends AbstractCart {
 		if ( $errors->get_error_codes() ) {
 			$this->logger->info( sprintf( 'Redirecting to checkout page. Required fields missing: %s', print_r( $errors->get_error_codes(), true ) ) );
 			WC()->session->set( 'chosen_payment_method', $this->payment_method->id );
+			foreach ( $errors->errors as $code => $messages ) {
+				foreach ( $messages as $msg ) {
+					\wc_add_notice( $msg, 'error', $errors->get_error_data( $code ) );
+				}
+			}
 			wc_add_notice(
 				apply_filters(
 					'wc_ppcp_checkout_validation_notice',

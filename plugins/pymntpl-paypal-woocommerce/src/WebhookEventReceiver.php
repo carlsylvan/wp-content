@@ -111,12 +111,16 @@ class WebhookEventReceiver {
 						'order_id' => $order->get_id()
 					] );
 					if ( $wc_refund ) {
-						// update the net amount since the refund affects that
-						PayPalFee::update_net_from_refund( $refund, $order );
-						$wc_refund->update_meta_data( Constants::PAYPAL_REFUND, $refund->id );
-						$wc_refund->save();
-						$order->add_order_note( sprintf( __( 'Order refunded in PayPal. Amount: %1$s. Refund ID: %2$s', 'pymntpl-paypal-woocommerce' ),
-							wc_price( $refund->amount->value, [ 'currency' => $refund->amount->currency ] ), $refund->id ) );
+						if ( is_wp_error( $wc_refund ) ) {
+							$this->logger->info( sprintf( 'Error processing refund for order %s. Reason: %s', $order->get_id(), $wc_refund->get_error_message() ) );
+						} else {
+							// update the net amount since the refund affects that
+							PayPalFee::update_net_from_refund( $refund, $order );
+							$wc_refund->update_meta_data( Constants::PAYPAL_REFUND, $refund->id );
+							$wc_refund->save();
+							$order->add_order_note( sprintf( __( 'Order refunded in PayPal. Amount: %1$s. Refund ID: %2$s', 'pymntpl-paypal-woocommerce' ),
+								wc_price( $refund->amount->value, [ 'currency' => $refund->amount->currency ] ), $refund->id ) );
+						}
 					}
 				}
 			}

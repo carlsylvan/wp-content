@@ -104,15 +104,6 @@ class BillingAgreementToken extends AbstractRoute {
 		if ( ! is_wp_error( $token ) ) {
 			return $token->token_id;
 		} else {
-			/**
-			 * @var \WP_Error $token
-			 */
-			$code = $token->get_error_code();
-			if ( $code === 'REFUSED_MARK_REF_TXN_NOT_ENABLED' ) {
-				$msg   = __( 'This merchant account is not permitted to create Merchant Initiated Billing Agreements. Please contact PayPal support and request reference transaction access.', 'pymntpl-paypal-woocommerce' );
-				$token = new \WP_Error( $token->get_error_code(), $msg, $token->get_error_data() );
-			}
-
 			return $token;
 		}
 	}

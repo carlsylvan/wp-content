@@ -5,15 +5,15 @@ namespace PaymentPlugins\PayPalSDK;
 
 /**
  * @property \PaymentPlugins\PayPalSDK\OrderApplicationContext $application_context
- * @property string                                            $id
- * @property string                                            $intent
- * @property PaymentSource                                     $payment_source
- * @property Payer                                             $payer
- * @property Collection                                        $purchase_units
- * @property string                                            $status
- * @property Collection                                        $links
- * @property string                                            $create_time
- * @property string                                            $update_time
+ * @property string $id
+ * @property string $intent
+ * @property PaymentSource $payment_source
+ * @property Payer $payer
+ * @property Collection $purchase_units
+ * @property string $status
+ * @property Collection $links
+ * @property string $create_time
+ * @property string $update_time
  *
  * Class Order
  * @package PaymentPlugins\PayPalSDK
@@ -190,6 +190,10 @@ class Order extends AbstractObject {
 		$this->update_time = $update_time;
 
 		return $this;
+	}
+
+	public function isApproved() {
+		return $this->status === self::APPROVED;
 	}
 
 	public function isComplete() {

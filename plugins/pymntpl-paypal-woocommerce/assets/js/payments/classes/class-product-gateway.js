@@ -21,6 +21,9 @@ class ProductGateway extends BaseGateway {
     onInit(...params) {
         super.onInit(...params);
         this.cart.trigger('productButtonOnInit');
+        if (this.product.isVariableProduct() && !this.product.isVariationSelected()) {
+            this.disableButtons();
+        }
     }
 
     setOptions(options) {

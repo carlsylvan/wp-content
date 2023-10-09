@@ -2,9 +2,9 @@
 Contributors: mr.clayton
 Tags: paypal, paylater, venmo, credit cards
 Requires at least: 4.7
-Tested up to: 6.3
+Tested up to: 6.4
 Requires PHP: 7.1
-Stable tag: 1.0.38
+Stable tag: 1.0.39
 Copyright: Payment Plugins
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -45,6 +45,10 @@ Our documentation has a step-by-step guide on how to connect the plugin to your 
 Payment Plugins is the team behind several of the highest reviewed and installed Payment integrations for WooCommerce.
 
 == Changelog ==
+= 1.0.39 - 10/3/23 =
+* Added - When validate required fields option is enabled, validate Germanized checkboxes.
+* Added - Ensure PayPal button is disabled on product page if variation isn't selected.
+* Added - Support for [WooCommerce Product Add-ons](https://woocommerce.com/products/product-add-ons/) plugin. Product addons are now accounted for on the product page when using PayPal as an express payment option.
 = 1.0.38 - 9/17/23 =
 * Added - New feature where the Place Order button on checkout page can be used for PayPal rather than the PayPal buttons. This is a good option
 for those that want the best page load speed or for German based merchants that have requirements around button location and text.

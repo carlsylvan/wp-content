@@ -95,6 +95,7 @@ class Main {
 		$this->container->get( ContextHandler::class );
 		$this->container->get( AjaxFrontendHandler::class );
 		$this->container->get( ShortCodesController::class );
+		$this->container->get( Messages::class );
 
 		if ( is_admin() ) {
 			$this->container->get( SettingsApi::class );
@@ -348,6 +349,12 @@ class Main {
 		$this->container->register( \PaymentPlugins\PPCP\WooCommerceShipStation\Package::class, function ( $container ) {
 			return new \PaymentPlugins\PPCP\WooCommerceShipStation\Package( $container, $this->version );
 		} );
+		$this->container->register( \PaymentPlugins\PPCP\WooCommerceGermanized\Package::class, function ( $container ) {
+			return new \PaymentPlugins\PPCP\WooCommerceGermanized\Package( $container, $this->version );
+		} );
+		$this->container->register( \PaymentPlugins\PPCP\WooCommerceProductAddons\Package::class, function ( $container ) {
+			return new \PaymentPlugins\PPCP\WooCommerceProductAddons\Package( $container, $this->version );
+		} );
 
 
 		$this->container->register( PackageRegistry::class, function ( $container ) {
@@ -363,7 +370,9 @@ class Main {
 				\PaymentPlugins\PPCP\MondialRelay\Package::class,
 				\PaymentPlugins\PPCP\Elementor\Package::class,
 				\PaymentPlugins\PPCP\WooCommerceExtraProductOptions\Package::class,
-				\PaymentPlugins\PPCP\WooCommerceShipStation\Package::class
+				\PaymentPlugins\PPCP\WooCommerceShipStation\Package::class,
+				\PaymentPlugins\PPCP\WooCommerceGermanized\Package::class,
+				\PaymentPlugins\PPCP\WooCommerceProductAddons\Package::class
 			] );
 
 			return $package_controller;

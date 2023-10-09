@@ -539,6 +539,7 @@ class PayPalGateway extends AbstractGateway {
 						'add_to_cart' => __( 'Match add to cart button width', 'pymntpl-paypal-woocommerce' ),
 						'full_width'  => __( 'Match width of container', 'pymntpl-paypal-woocommerce' )
 					],
+					'desc_tip'    => true,
 					'description' => __( 'This option allows you to control the width of the payment buttons.', 'pymntpl-paypal-woocommerce' )
 				]
 			];

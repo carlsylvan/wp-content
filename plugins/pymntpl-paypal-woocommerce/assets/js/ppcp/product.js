@@ -18,6 +18,10 @@ class Product extends Event {
         return this.data?.needsShipping;
     }
 
+    isVariationSelected() {
+        return !!this.variation;
+    }
+
     onQuantityChange(e) {
         if (e?.isTrigger) {
             //cause a short delay so this won't execute before foundVariation

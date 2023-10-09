@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitde66a9cb9d76cc011614261e63bdd80f
+class ComposerStaticInita6e9be76c0900cc3dfb29733ce4fe724
 {
     public static $prefixLengthsPsr4 = array (
         'P' => 
@@ -13,6 +13,8 @@ class ComposerStaticInitde66a9cb9d76cc011614261e63bdd80f
             'PaymentPlugins\\PayPalSDK\\' => 25,
             'PaymentPlugins\\PPCP\\WooFunnels\\' => 31,
             'PaymentPlugins\\PPCP\\WooCommerceShipStation\\' => 43,
+            'PaymentPlugins\\PPCP\\WooCommerceProductAddons\\' => 45,
+            'PaymentPlugins\\PPCP\\WooCommerceGermanized\\' => 42,
             'PaymentPlugins\\PPCP\\WooCommerceExtraProductOptions\\' => 51,
             'PaymentPlugins\\PPCP\\Stripe\\' => 27,
             'PaymentPlugins\\PPCP\\MondialRelay\\' => 33,
@@ -38,6 +40,14 @@ class ComposerStaticInitde66a9cb9d76cc011614261e63bdd80f
         'PaymentPlugins\\PPCP\\WooCommerceShipStation\\' => 
         array (
             0 => __DIR__ . '/../..' . '/packages/woocommerce-shipstation/src',
+        ),
+        'PaymentPlugins\\PPCP\\WooCommerceProductAddons\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/packages/woocommerce-product-addons/src',
+        ),
+        'PaymentPlugins\\PPCP\\WooCommerceGermanized\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/packages/woocommerce-germanized/src',
         ),
         'PaymentPlugins\\PPCP\\WooCommerceExtraProductOptions\\' => 
         array (
@@ -146,9 +156,9 @@ class ComposerStaticInitde66a9cb9d76cc011614261e63bdd80f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitde66a9cb9d76cc011614261e63bdd80f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitde66a9cb9d76cc011614261e63bdd80f::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitde66a9cb9d76cc011614261e63bdd80f::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInita6e9be76c0900cc3dfb29733ce4fe724::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInita6e9be76c0900cc3dfb29733ce4fe724::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInita6e9be76c0900cc3dfb29733ce4fe724::$classMap;
 
         }, null, ClassLoader::class);
     }

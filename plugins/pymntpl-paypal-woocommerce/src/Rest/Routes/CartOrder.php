@@ -88,6 +88,7 @@ class CartOrder extends AbstractCart {
 			}
 			$this->cache->set( Constants::CAN_UPDATE_ORDER_DATA, true );
 			$this->cache->set( Constants::PAYPAL_ORDER_ID, $result->id );
+			$this->cache->set( Constants::SHIPPING_PREFERENCE, $order->getApplicationContext()->getShippingPreference() );
 
 			return $result->id;
 		} catch ( \Exception $e ) {

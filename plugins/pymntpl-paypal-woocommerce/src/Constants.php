@@ -65,4 +65,6 @@ class Constants {
 
 	const SHIPPING_ADDRESS_DISABLED = 'shipping_address_disabled';
 
+	const SHIPPING_PREFERENCE = 'shipping_preference';
+
 }

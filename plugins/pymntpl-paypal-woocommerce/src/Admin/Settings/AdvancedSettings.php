@@ -41,7 +41,7 @@ class AdvancedSettings extends AbstractSettings {
 			'locale'                             => [
 				'title'       => __( 'Locale Setting', 'pymntpl-paypal-woocommerce' ),
 				'type'        => 'select',
-				'default'     => 'auto',
+				'default'     => 'site',
 				'options'     => [
 					'auto' => __( 'Auto', 'pymntpl-paypal-woocommerce' ),
 					'site' => __( 'Site language', 'pymntpl-paypal-woocommerce' ),

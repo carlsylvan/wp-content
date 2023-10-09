@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Payment Plugins for PayPal WooCommerce plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Payment Plugins for PayPal WooCommerce 1.0.38\n"
+"Project-Id-Version: Payment Plugins for PayPal WooCommerce 1.0.39\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pymntpl-paypal-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-09-17T17:24:44+00:00\n"
+"POT-Creation-Date: 2023-10-04T00:09:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: pymntpl-paypal-woocommerce\n"
@@ -1020,64 +1020,68 @@ msgstr ""
 msgid "Billing Agreement ID"
 msgstr ""
 
-#: src/Messages.php:17
+#: src/Messages.php:20
 msgid "Please check the terms and conditions before proceeding."
 msgstr ""
 
-#: src/Messages.php:18
+#: src/Messages.php:21
 msgid "Invalid PayPal client ID. Please check your API Settings."
 msgstr ""
 
-#: src/Messages.php:19
+#: src/Messages.php:22
 msgid "PayPal does not support currency %. Please use a supported currency."
 msgstr ""
 
-#: src/PaymentHandler.php:111
+#: src/Messages.php:26
+msgid "This merchant account is not permitted to create Merchant Initiated Billing Agreements. Please contact PayPal support and request reference transaction access."
+msgstr ""
+
+#: src/PaymentHandler.php:116
 msgid "Error processing payment. Reason: %s"
 msgstr ""
 
-#: src/PaymentHandler.php:146
+#: src/PaymentHandler.php:153
 msgid "PayPal capture status is pending. Reason: %1$s. Payment will complete when capture.completed webhook is received."
 msgstr ""
 
-#: src/PaymentHandler.php:161
+#: src/PaymentHandler.php:168
 msgid "PayPal order %s created. %s"
 msgstr ""
 
-#: src/PaymentHandler.php:162
+#: src/PaymentHandler.php:169
 msgid "Capture ID: %s"
 msgstr ""
 
-#: src/PaymentHandler.php:162
+#: src/PaymentHandler.php:169
 msgid "Authorization ID: %s"
 msgstr ""
 
-#: src/PaymentHandler.php:250
+#: src/PaymentHandler.php:257
 msgid "To process a refund, there must be a transaction id associated with the order."
 msgstr ""
 
-#: src/PaymentHandler.php:253
+#: src/PaymentHandler.php:260
 msgid "This payment has a status of Authorize. Only captured payments can be refunded."
 msgstr ""
 
-#: src/PaymentHandler.php:296
+#: src/PaymentHandler.php:303
 msgid "Error capturing payment. Reason: %s"
 msgstr ""
 
-#: src/PaymentHandler.php:300
+#: src/PaymentHandler.php:307
 msgid "Payment captured in PayPal. Capture ID: %s Amount: %s"
 msgstr ""
 
-#: src/PaymentHandler.php:332
+#: src/PaymentHandler.php:339
 msgid "A valid authorization ID is required to perform a void."
 msgstr ""
 
-#: src/PaymentHandler.php:346
-#: src/PaymentHandler.php:377
+#: src/PaymentHandler.php:353
+#: src/PaymentHandler.php:384
 msgid "PayPal authorization cancelled. Authorization ID: %s"
 msgstr ""
 
-#: src/PaymentHandler.php:370
+#: src/PaymentHandler.php:377
 msgid "Order cancellation"
 msgstr ""
 
@@ -1090,7 +1094,7 @@ msgid "Error processing refund. Reason: %s"
 msgstr ""
 
 #: src/Payments/Gateways/AbstractGateway.php:248
-#: src/WebhookEventReceiver.php:118
+#: src/WebhookEventReceiver.php:121
 msgid "Order refunded in PayPal. Amount: %1$s. Refund ID: %2$s"
 msgstr ""
 
@@ -1358,36 +1362,36 @@ msgstr ""
 msgid "Match width of container"
 msgstr ""
 
-#: src/Payments/Gateways/PayPalGateway.php:542
+#: src/Payments/Gateways/PayPalGateway.php:543
 msgid "This option allows you to control the width of the payment buttons."
 msgstr ""
 
-#: src/Payments/Gateways/PayPalGateway.php:557
+#: src/Payments/Gateways/PayPalGateway.php:558
 msgid "Product Page"
 msgstr ""
 
-#: src/Payments/Gateways/PayPalGateway.php:558
+#: src/Payments/Gateways/PayPalGateway.php:559
 msgid "Cart Page"
 msgstr ""
 
-#: src/Payments/Gateways/PayPalGateway.php:559
+#: src/Payments/Gateways/PayPalGateway.php:560
 msgid "Checkout Page"
 msgstr ""
 
-#: src/Payments/Gateways/PayPalGateway.php:560
+#: src/Payments/Gateways/PayPalGateway.php:561
 #: templates/checkout/express-checkout.php:12
 msgid "Express Checkout"
 msgstr ""
 
-#: src/Payments/Gateways/PayPalGateway.php:561
+#: src/Payments/Gateways/PayPalGateway.php:562
 msgid "Order Pay"
 msgstr ""
 
-#: src/Payments/Gateways/PayPalGateway.php:562
+#: src/Payments/Gateways/PayPalGateway.php:563
 msgid "Minicart"
 msgstr ""
 
-#: src/Payments/Gateways/PayPalGateway.php:614
+#: src/Payments/Gateways/PayPalGateway.php:615
 msgid "Place order"
 msgstr ""
 
@@ -1427,11 +1431,7 @@ msgstr ""
 msgid "Your API credentials have been saved and your PayPal account is connected."
 msgstr ""
 
-#: src/Rest/Routes/BillingAgreementToken.php:112
-msgid "This merchant account is not permitted to create Merchant Initiated Billing Agreements. Please contact PayPal support and request reference transaction access."
-msgstr ""
-
-#: src/Rest/Routes/CartCheckout.php:68
+#: src/Rest/Routes/CartCheckout.php:73
 msgid "Please fill out all required fields then click Place Order."
 msgstr ""
 
@@ -1659,11 +1659,11 @@ msgstr ""
 msgid "Refund created within PayPal."
 msgstr ""
 
-#: src/WebhookEventReceiver.php:132
+#: src/WebhookEventReceiver.php:136
 msgid "Dispute %1$s created. Dispute reason: %2$s."
 msgstr ""
 
-#: src/WebhookEventReceiver.php:144
+#: src/WebhookEventReceiver.php:148
 msgid "Dispute %1$s resolved."
 msgstr ""
 

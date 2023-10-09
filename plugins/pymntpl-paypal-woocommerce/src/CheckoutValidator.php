@@ -77,6 +77,12 @@ class CheckoutValidator {
 				}
 			}
 		}
+
+		/**
+		 * @since 1.0.39
+		 */
+		do_action( 'wc_ppcp_checkout_validation', $this, $request );
+
 		if ( ! empty( $this->errors ) && $throw_exception ) {
 			throw new \Exception( 'validation_errors', self::VALIDATION_ERRORS );
 		}
