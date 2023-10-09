@@ -470,9 +470,10 @@ if(is_array($value)){
    $value=nl2br($value);
 }
 else if(in_array($type,array('checkbox','radio'))){  
-    $is_key=true;
+   
 
    if(!empty($field['values']) && is_array($field['values'])){
+        $is_key=true;
    foreach($field['values']  as $v){
    $val=$text=$v;
    if(is_array($v)){
@@ -517,7 +518,7 @@ else if(in_array($type,array('select','multiselect','state','country'))){
 ?>
 <select name="<?php echo esc_html($i_name) ?>" id="vx_<?php echo esc_html($field['name']); ?>" <?php  echo esc_html($multiple)  ?> class="vx_input vx_input_100" <?php echo esc_html($req) ?>>
 <?php
- if(!empty($field['values']) && is_array($field['values'])){
+ if(!empty($field['values']) && is_array($field['values'])){ 
  foreach($field['values'] as $v){
         $val=$text=$v;
    if(is_array($v)){
@@ -594,7 +595,7 @@ $value=is_array($value) ? implode(', ',$value) : $value;
 </div>
 <div class="vx_value">
   <?php
-    if($is_key){$value=$key_val;}
+    if($is_key && !empty($key_val)){$value=$key_val;}  
 //      
   if($type == 'email' && filter_var($value, FILTER_VALIDATE_EMAIL)){ //it is a url    
   ?>

@@ -1092,14 +1092,14 @@ public function format_admin_field($row,$name){
     $field_label='';
    if( $name == 'url' && isset($row[$name]) && filter_var($row[$name],FILTER_VALIDATE_URL)){
        $url=trim($row[$name],'/');
- $field_label='<a href="'.$row[$name].'" target="_blank">...'.substr($url,strrpos($url,'/')).'</a>';   
+ $field_label='<a href="'.esc_url($row[$name]).'" target="_blank">...'.esc_attr(substr($url,strrpos($url,'/'))).'</a>';   
 }
 if($name == 'browser'){
 if(!empty($row['browser']) ){
-$field_label.='<img src="'.vxcf_form::$base_url.'images/'.$row['browser'].'.png" class="icon_s"  title="'.$row['browser'].'">';
+$field_label.='<img src="'.vxcf_form::$base_url.'images/'.esc_attr($row['browser']).'.png" class="icon_s"  title="'.esc_attr($row['browser']).'">';
 }
 if(!empty($row['os'])){
-$field_label.='<img src="'.vxcf_form::$base_url."images/".$row['os'].'.png" class="icon_s"  title="'.$row['os'].'">';
+$field_label.='<img src="'.vxcf_form::$base_url."images/".esc_attr($row['os']).'.png" class="icon_s"  title="'.esc_attr($row['os']).'">';
 } } 
 return $field_label;
 } 

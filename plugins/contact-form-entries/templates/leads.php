@@ -2,7 +2,7 @@
   if ( ! defined( 'ABSPATH' ) ) {
      exit;
  } 
-  // echo json_encode($fields);
+   //echo wp_kses_post(null);
      ?>
  <style type="text/css">
   .vx_col{
@@ -363,7 +363,7 @@ margin-left: 8px;
   <?php
 if($items>0){
   ?>
-  <div class="tablenav-pages"> <span id="paging_header" class="displaying-num"><?php _e('Displaying','contact-form-entries') ?> <span id="paging_range_min_header"><?php echo esc_html($data['min']) ?></span> - <span id="paging_range_max_header"><?php echo esc_html($data['max']) ?></span> of <span id="paging_total_header"><?php echo esc_html($data['items']) ?></span></span><?php echo wp_kses_post($data['links']) ?></div>
+  <div class="tablenav-pages"> <span id="paging_header" class="displaying-num"><?php _e('Displaying','contact-form-entries') ?> <span id="paging_range_min_header"><?php echo esc_html($data['min']) ?></span> - <span id="paging_range_max_header"><?php echo esc_html($data['max']) ?></span> of <span id="paging_total_header"><?php echo esc_html($data['items']) ?></span></span><?php echo paginate_links($data['links']) ?></div>
  <?php
 }
        ?>       
@@ -464,6 +464,7 @@ if(is_array($field_label)){
 if(isset($field['vx_filter'])){
 ///  $field_label=apply_filters('vxcf_entries_plugin_table_field_value',$field_label,$field);  
 } }
+$field_label=esc_html($field_label);
 if(in_array($field['name'],$main_fields)){
     $main_field=ltrim($field['name'],'vx');
 if( in_array($main_field,array('created','updated') ) ){
@@ -473,25 +474,27 @@ $field_label= date('M-d-Y H:i:s',$field_label);
 if($main_field == 'screen'){ $field_label=$lead['screen']; }
 if( in_array($main_field,array('url','browser'))){
  $field_label=$this->format_admin_field($lead,$main_field);  
+} 
 }
-}
+//
 if(isset($field['type']) && $field['type'] == 'file'){
     if(filter_var($field_label,FILTER_VALIDATE_URL) === false){
-  $field_label=$upload['url'].$field_label;     
+  $field_label=esc_url($upload['url'].$field_label);     
     } 
      if(filter_var($field_label,FILTER_VALIDATE_URL)){
           $file_arr=explode('/',$field_label);
     $file_name=$file_arr[count($file_arr)-1];
-$field_label="<div><a href='$field_label' target='_blank'>".$file_name."</a></div>";
+$field_label='<div><a href="'.esc_url($field_label).'" target="_blank">'.esc_attr($file_name)."</a></div>";
      }
 }     
 if($f_no == 1){
     if(empty($field_label)){
         $field_label='N/A';
     }
+
 $entry_link=$link.'&id='.$lead['id'];
 $entry_link_f=$entries_link_form.'&id='.$lead['id'];
-  $field_label='<a href="'.$entry_link.'">'.$field_label.'</a>'; 
+  $field_label='<a href="'.esc_url($entry_link).'">'.esc_attr($field_label).'</a>'; 
   $mark_action='read'; $mark_label= __('Mark Read','contact-form-entries');
   if($lead['is_read'] == 1){
    $mark_action='unread'; $mark_label= __('Mark Unread','contact-form-entries');    
@@ -510,7 +513,7 @@ $delete_link=$entry_link_f.'&'.vxcf_form::$id.'_action=delete&vx_action='.$nonce
       }
 
       ?>
-               <td class="column-<?php echo esc_html($field['_id'].$hide_col) ?>"><?php echo wp_kses_post($field_label); 
+               <td class="column-<?php echo esc_html($field['_id'].$hide_col) ?>"><?php echo $field_label; 
       if($f_no == 1){
           ?>
           <div class="row-actions">
@@ -561,7 +564,7 @@ $delete_link=$entry_link_f.'&'.vxcf_form::$id.'_action=delete&vx_action='.$nonce
   if($items>0){
   ?>
     <div class="crm_actions tablenav">
-  <div class="tablenav-pages"> <span id="paging_header" class="displaying-num"><?php _e('Displaying','contact-form-entries') ?> <span id="paging_range_min_header"><?php echo esc_html($data['min']) ?></span> - <span id="paging_range_max_header"><?php echo esc_html($data['max']) ?></span> of <span id="paging_total_header"><?php echo esc_html($data['items']) ?></span></span><?php echo wp_kses_post($data['links']) ?></div>
+  <div class="tablenav-pages"> <span id="paging_header" class="displaying-num"><?php _e('Displaying','contact-form-entries') ?> <span id="paging_range_min_header"><?php echo esc_html($data['min']) ?></span> - <span id="paging_range_max_header"><?php echo esc_html($data['max']) ?></span> of <span id="paging_total_header"><?php echo esc_html($data['items']) ?></span></span><?php echo paginate_links($data['links']) ?></div>
     </div>
   <?php
   }

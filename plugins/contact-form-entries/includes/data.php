@@ -393,7 +393,7 @@ if(!empty($res)){
        } */ 
 }
  //var_dump($leads); die(); 
-      $range_min=$range_max=$page_links='';
+      $range_min=$range_max=''; $page_links=array();
        if(empty($req['vx_links'])){
 
   $page_id=isset($_REQUEST['page_id'])&& $_REQUEST['page_id'] !="" ? vxcf_form::post('page_id') : "1";
@@ -403,7 +403,7 @@ if(!empty($res)){
   }
   unset($_GET['page_id']);
   $query_h=http_build_query(vxcf_form::clean($_GET));
-  $page_links = paginate_links( array(
+  $page_links =  array(
   'base' =>  admin_url("admin.php")."?".$query_h."&%_%" ,
   'format' => 'page_id=%#%',
   'prev_text' =>'&laquo;',
@@ -411,7 +411,7 @@ if(!empty($res)){
   'total' => $pages,
   'current' => $page_id,
   'show_all' => false
-  ));
+  );
        }
   return array("min"=>$range_min,"max"=>$range_max,"items"=>$items,"links"=>$page_links,'result'=>$leads);
   //

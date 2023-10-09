@@ -2,7 +2,7 @@
 /**
 * Plugin Name: Contact Form Entries
 * Description: Save form submissions to the database from <a href="https://wordpress.org/plugins/contact-form-7/">Contact Form 7</a>, <a href="https://wordpress.org/plugins/ninja-forms/">Ninja Forms</a>, <a href="https://elementor.com/widgets/form-widget/">Elementor Forms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/">WP Forms</a>.
-* Version: 1.3.1
+* Version: 1.3.2
 * Requires at least: 3.8
 * Tested up to: 6.3
 * Author URI: https://www.crmperks.com
@@ -26,7 +26,7 @@ class vxcf_form {
   public static $type = "vxcf_form";
   public static $path = ''; 
 
-  public static  $version = '1.3.1';
+  public static  $version = '1.3.2';
   public static $upload_folder = 'crm_perks_uploads';
   public static $db_version='';  
   public static $base_url='';  
@@ -604,7 +604,7 @@ $this->create_entry($lead,$form_arr,'wp','',$track);
 //var_dump($fields); die();
 }
 public function create_entry_el( $record){
-    if(empty(self::$is_pr)){ return; }
+
     $data=$record->get_formatted_data();
     $form_id_p=$this->post('form_id');
     $post_id_p=$this->post('post_id');
@@ -626,7 +626,7 @@ if($v['type'] == 'upload'){
 }
 $lead[$v['id']]=$val;
 }    } }
-if($track){
+if($track ){ //&& !empty(self::$is_pr)
   $upload_files=$this->copy_files($upload_files); 
 }  
        if(is_array($upload_files)){
@@ -689,16 +689,16 @@ $uploaded_files=$this->copy_files($uploaded_files);
 $form_title=$form->title();
 $tags=vxcf_form::get_form_fields('cf_'.$form_id); 
 $post_data=$submission->get_posted_data();
-
+//var_dump($post_data); die();
  $lead=array();
 if(is_array($post_data)){
   foreach($post_data as $k=>$val){
-    if(in_array($k,array('vx_width','vx_height','vx_url'))){ continue; } 
+    if(in_array($k,array('vx_width','vx_height','vx_url','g-recaptcha-response'))){ continue; } 
        if(isset($tags[$k])){
           $v=$tags[$k];  //$v is empty for non form fields 
       }
      $name=$k;  //$v['name'] //if empty then $v is old
-
+//var_dump($v);
  if(isset($uploaded_files[$name])){
   $val=$uploaded_files[$name];
    }
@@ -721,7 +721,7 @@ if(is_array($post_data)){
   $lead[$k]=$val;          
   }  
 }
-
+//var_dump($lead,$post_data); die('-----------');
 
 $form_arr=array('id'=>$form_id,'name'=>$form_title,'fields'=>$tags);
 $this->create_entry($lead,$form_arr,'cf','',$track);
@@ -1735,10 +1735,32 @@ $forms =cfx_form::get_forms();
     } 
  ///////   
     }
-    
-    if(!empty($all_forms_db['el'])){
-        $all_forms['el']=$all_forms_db['el'];
+    if(defined('ELEMENTOR_PRO_VERSION') ){  //&& class_exists('ElementorPro\\Plugin')
+    global $wpdb;
+$data = $wpdb->get_results( "SELECT m.post_id, m.meta_value,p.post_title FROM $wpdb->postmeta m inner join $wpdb->posts p on(m.post_id=p.ID) WHERE p.post_status='publish' and m.meta_key = '_elementor_data' limit 30" , ARRAY_A  ); //__elementor_forms_snapshot
+  $forms_arr=array();  
+  
+foreach($data as $v){
+    $elforms=json_decode($v['meta_value'],true); 
+    $elforms=self::find_el_forms($elforms);   
+    foreach($elforms as $form){
+        $id=$form['id'].'_'.$v['post_id'];
+   
+    $forms_arr[$id]=$form['settings']['form_name'].' - '.substr($v['post_title'],0,200); 
+         
     }
+}
+if(!empty($all_forms_db['el']['forms'])){ 
+ foreach($all_forms_db['el']['forms'] as $k=>$v){
+   if(!isset($forms_arr[$k])){ $forms_arr[$k]=$v; }
+ }   
+    
+}  
+if(!empty($forms_arr)){
+$all_forms['el']=array('label'=>'Elementor Forms','forms'=>$forms_arr); }
+//   
+} 
+ 
    if(class_exists('GFFormsModel')){
      $gf_forms=GFFormsModel::get_forms();
       $forms_arr=array();
@@ -1946,7 +1968,7 @@ if(isset($_GET['vx_crm_key'])){
     
 }
 if(is_array($tags)){
-  foreach($tags as $tag){
+  foreach($tags as $tag){ //var_dump($tag);
      if(is_object($tag)){ $tag=(array)$tag; }
      
    if(!empty($tag['name'])){
@@ -1973,7 +1995,7 @@ if(is_array($tags)){
                }
            }
          $field['values']=$ops;  
-       }
+       } //var_dump($field);
    $fields[$id]=$field;    
    }   
   }  
@@ -2094,7 +2116,7 @@ if(count($fields_arr)>0){
         if(!empty($field['options'])){
            $field['values']=maybe_unserialize($field['options']); 
         }
-        $fields[]=$field;
+        $fields[$field['id']]=$field;
     }
 }
 break;
@@ -2264,28 +2286,37 @@ case'vxad':
   
 
 break;
-case'el':
+case'el_new':
 
 if(isset($form_arr[2])){
 $post_id=$form_arr[2];
-$forms=get_post_meta($post_id,'_elementor_data',true);
-$forms=json_decode($forms,true);
-if(!empty($forms)){
-$form=self::find_el_form($forms,$id);   
+
+  $formsp=get_post_meta($post_id,'__elementor_forms_snapshot',true);
+  $form=array();
+  if(!empty($formsp)){
+  $forms=json_decode($formsp,true);    
+  foreach($forms as $v){
+    if($v['id'] == $id){
+     $form=$v;   
+    }  
+  }
 $fields=array();
-if(!empty($form['form_fields'])){
-  foreach($form['form_fields'] as $tag){
-   if(!empty($tag['custom_id']) && !in_array($tag['field_type'],array('html','step','honeypot','recaptcha','recaptcha_v3'))){
-       $field=array('id'=>$tag['custom_id']);
-       $field['name']=$tag['custom_id'];
-       $field['label']=$tag['field_label'];
-       $field['type']=$tag['field_type'];
+if(!empty($form['form'])){
+  foreach($form['form'] as $tag){ 
+   if(!empty($tag['id']) ){
+       if(empty($tag['type'])){ $tag['type']=$tag['id']; }
+       if(!in_array($tag['type'],array('html','step','honeypot','recaptcha','recaptcha_v3'))){
+       $field=array('id'=>$tag['id']);
+       $field['name']=$tag['id'];
+       $field['label']=$tag['label'];
+       $field['type']=$tag['type'];
        $field['req']=!empty($tag['required']) ? 'true' : '';
   if(!empty($tag['allow_multiple']) ){
   $field['type']='multiselect';   
   }
-  if($field['type'] == 'acceptance'){
+  if($field['type'] == 'acceptance'){ 
       $field['type']='checkbox';
+      $field['values']=array(array('label'=>$tag['acceptance_text'],'value'=>'on'));
   }
   if($field['type'] == 'upload'){
       $field['type']='file';
@@ -2301,7 +2332,53 @@ $ops[]=array('label'=>$v_arr[0],'value'=>$v_arr[1]);
 $field['values']=$ops;  
    }
    $fields[$tag['custom_id']]=$field;    
-   }   
+   }   }
+  }  
+} 
+}
+
+}
+break;
+case'el':
+if(isset($form_arr[2])){
+$post_id=$form_arr[2];
+$forms=get_post_meta($post_id,'_elementor_data',true);
+$forms=json_decode($forms,true);
+if(!empty($forms)){
+$form=self::find_el_form($forms,$id); 
+
+if(!empty($form['form_fields'])){
+  foreach($form['form_fields'] as $tag){ 
+   if(!empty($tag['custom_id']) ){
+       if(empty($tag['field_type'])){ $tag['field_type']=$tag['custom_id']; }
+       if(!in_array($tag['field_type'],array('html','step','honeypot','recaptcha','recaptcha_v3'))){
+       $field=array('id'=>$tag['custom_id']);
+       $field['name']=$tag['custom_id'];
+       $field['label']=$tag['field_label'];
+       $field['type']=$tag['field_type'];
+       $field['req']=!empty($tag['required']) ? 'true' : '';
+  if(!empty($tag['allow_multiple']) ){
+  $field['type']='multiselect';   
+  }
+  if($field['type'] == 'acceptance'){ 
+      $field['type']='checkbox';
+      $field['values']=array(array('label'=>$tag['acceptance_text'],'value'=>'on'));
+  }
+  if($field['type'] == 'upload'){
+      $field['type']='file';
+  }
+if(!empty($tag['field_options'])){
+$opts_array=explode("\n",$tag['field_options']);
+$ops=array();
+foreach($opts_array as $v){
+$v_arr=explode('|',$v); 
+if(!isset($v_arr[1])){ $v_arr[1]=$v_arr[0]; }
+$ops[]=array('label'=>$v_arr[0],'value'=>$v_arr[1]);  
+}
+$field['values']=$ops;  
+   }
+   $fields[$tag['custom_id']]=$field;    
+   }   }
   }  
 } 
 }
@@ -2468,7 +2545,7 @@ $label=isset($v['label']) ? $v['label'] : $type;
     }   
   $field['values']=$choices;   
         }
-        $fields[]=$field; 
+        $fields[$v['id']]=$field; 
   //  }
     
 }
@@ -2869,6 +2946,22 @@ if(is_array($var) && isset($var[0]) ){
     }
     
 } 
+}
+public static function find_el_forms($var,&$forms=array()){
+
+if(is_array($var) && isset($var[0]) ){        
+    foreach($var as $v){ 
+    if(isset($v['widgetType']) && $v['widgetType'] == 'form'){  
+          $forms[]= $v;  
+        }  
+     if (!empty($v['elements']) &&  is_array( $v['elements'] ) ) { 
+  self::find_el_forms($v['elements'],$forms); 
+    } 
+         
+    }
+    
+}
+return $forms; 
 }
 public static function esc_data( $data ) {
         $xls_chars = array( '=', '+', '-', '@' );
