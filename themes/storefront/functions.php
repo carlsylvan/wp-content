@@ -97,13 +97,13 @@ $labels = array(
 );
  
 $args = array(
-'supports' => $supports, // Vilka "content" delar som ska användas i post-typen
-'labels' => $labels, // Namn och text som syns i UI:t
-'public' => true, // Om alla användare ska kunna skapa denna post-types
-'query_var' => true, // Skapa en query-variabel för post-typen
-'rewrite' => array('slug' => 'stores'), // Hur man når post-typen (t.ex. som inläggsida) http://localhost/stores/
-'has_archive' => false, // Ska post-typen ha arkiv-sida? Likt inlägg
-'hierarchical' => true, // Ska de behandlas som sidor (true) eller inlägg (false)?
+'supports' => $supports,
+'labels' => $labels,
+'public' => true, 
+'query_var' => true, 
+'rewrite' => array('slug' => 'stores'),
+'has_archive' => false, 
+'hierarchical' => true,
 'show_in_nav_menus' => true,
 );
  
