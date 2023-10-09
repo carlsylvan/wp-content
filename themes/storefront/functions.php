@@ -104,6 +104,7 @@ $args = array(
 'rewrite' => array('slug' => 'stores'), // Hur man når post-typen (t.ex. som inläggsida) http://localhost/stores/
 'has_archive' => false, // Ska post-typen ha arkiv-sida? Likt inlägg
 'hierarchical' => true, // Ska de behandlas som sidor (true) eller inlägg (false)?
+'show_in_nav_menus' => true,
 );
  
 register_post_type('stores', $args);
