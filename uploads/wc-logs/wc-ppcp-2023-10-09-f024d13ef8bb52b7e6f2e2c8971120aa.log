@@ -1,0 +1,24 @@
+2023-10-09T09:28:53+00:00 ERROR API error: Array
+(
+    [url] => https://api-m.paypal.com/v1/oauth2/token
+    [method] => POST
+    [http_status] => 401
+    [request] => Array
+(
+    [grant_type] => client_credentials
+)
+
+    [error] => Array
+        (
+            [error] => invalid_client
+            [error_description] => Client Authentication failed
+        )
+
+)
+
+2023-10-09T09:40:15+00:00 INFO Webhook could not be configured during connect process. PayPal does not allow webhooks where the domain is localhost.
+2023-10-09T09:43:41+00:00 INFO Redirecting to checkout page. Required fields missing: Array
+(
+    [0] => billing_phone_required
+)
+
