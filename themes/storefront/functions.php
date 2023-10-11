@@ -76,6 +76,7 @@ function post_type_stores()
 $supports = array(
 'title', 
 'thumbnail',
+'editor',
 'excerpt',
 'custom-fields',
 'post-formats',
